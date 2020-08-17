@@ -1,20 +1,18 @@
 variables:
   FOD_NOTES: "Triggered by Gitlab Pipeline IID $CI_PIPELINE_IID: $CI_PIPELINE_URL"
+  FOD_URL: "https://ams.fotify.com"
+  FOD_API_URL: "https://api.ams.fortify.com/"
 
 image: registry.gitlab.com/fortify/fortify-tools:latest
 
 fod_sast:
   script:
     - 'export PATH=$PATH:/opt/bin'
-    - 'chmod +x /opt/bin/scancentral'
     # Create package with Fortify Scan Central
     - 'scancentral package -bt mvn -o package.zip'
     # Invoke FoD Uploader to start scan with FoD (no polling)
-    - 'java -jar /opt/FodUpload.jar -z package.zip -aurl https://api.ams.fortify.com/ -purl https://ams.fotify.com -rid "$FOD_RELEASE" -tc "$FOD_TENANT" -uc "$FOD_USER" "$FOD_PAT" -ep 4 -rp 0 -pp 0 -n "$FOD_NOTES"'
+    - 'java -jar $FOD_UPLOAD -z package.zip -aurl $FOD_API_URL -purl $FOD_URL -rid "$FOD_RELEASE" -tc "$FOD_TENANT" -uc "$FOD_USER" "$FOD_PAT" -ep 4 -rp 0 -pp 0 -n "$FOD_NOTES"'
     # Invoke FoD Uploader, poll for results, and break the build
-    #- 'java -jar FodUpload.jar -z package.zip -uc $FOD_USERNAME $FOD_PASSWORD -bsi $FOD_BSI_AUTOAUDIT -ep 4 -rp 0 -pp 0 -n "$FORTIFY_NOTES"-I 1 | tee Fod_SAST_results.txt'
+    #- 'java -jar $FOD_UPLOAD -z package.zip -aurl $FOD_API_URL -purl $FOD_URL -rid "$FOD_RELEASE" -tc "$FOD_TENANT" -uc "$FOD_USER" "$FOD_PAT" -ep 4 -rp 0 -pp 0 -n "$FOD_NOTES" -I 1 | tee Fod_SAST_results.txt'
     #- 'if [ $(grep -c Failed Fod_SAST_results.txt) -ne 0 ]; then echo "Release is failing Fortify on Demand security policy. Marking fod_sast job as failed." && exit 2; fi'
-  #artifacts:
-    #paths:
-      #- "Fod_SAST_results.txt"
   allow_failure: true 
