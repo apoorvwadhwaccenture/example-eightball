@@ -1,6 +1,6 @@
 variables:
   FOD_NOTES: "Triggered by Gitlab Pipeline IID $CI_PIPELINE_IID: $CI_PIPELINE_URL"
-  FOD_URL: "https://ams.fotify.com"
+  FOD_URL: "https://ams.fortify.com"
   FOD_API_URL: "https://api.ams.fortify.com/"
 
 image: registry.gitlab.com/fortify/fortify-tools:latest
