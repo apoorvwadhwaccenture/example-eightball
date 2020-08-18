@@ -15,4 +15,8 @@ fod_sast:
     # Invoke FoD Uploader, poll for results, and break the build
     #- 'java -jar $FOD_UPLOAD -z package.zip -aurl $FOD_API_URL -purl $FOD_URL -rid "$FOD_RELEASE" -tc "$FOD_TENANT" -uc "$FOD_USER" "$FOD_PAT" -ep 4 -rp 0 -pp 0 -n "$FOD_NOTES" -I 1 | tee Fod_SAST_results.txt'
     #- 'if [ $(grep -c Failed Fod_SAST_results.txt) -ne 0 ]; then echo "Release is failing Fortify on Demand security policy. Marking fod_sast job as failed." && exit 2; fi'
+  only:
+    refs:
+      - master
+      - demo
   allow_failure: true 
