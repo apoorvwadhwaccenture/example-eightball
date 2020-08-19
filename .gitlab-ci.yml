@@ -1,4 +1,6 @@
-include: 'fortify-sast-fod-poll.yml'
+include: 'fortify-sast-fod.yml'
 
 fortify-sast-fod:
-  allow_failure: false
+  variables:
+    FOD_NOTES: "Testing variable override from included job"
+  allow_failure: true
