@@ -1,0 +1,13 @@
+fortify-sast-fod:
+  image: registry.gitlab.com/fortify/fortify-tools:latest
+  variables:
+    FOD_URL: "https://ams.fortify.com"
+    FOD_API_URL: "https://api.ams.fortify.com/"
+    FOD_NOTES: "Triggered by Gitlab Pipeline IID $CI_PIPELINE_IID: $CI_PIPELINE_URL"
+  script:
+    - 'export PATH=$PATH:/opt/bin'
+    # Package source code using ScanCentral client
+    - 'scancentral package -bt mvn -o package.zip'
+    # Start Fortify on Demand SAST scan
+    - 'java -jar $FOD_UPLOAD -z package.zip -aurl $FOD_API_URL -purl $FOD_URL -rid "$FOD_RELEASE" -tc "$FOD_TENANT" -uc "$FOD_USER" "$FOD_PAT" -ep 4 -n "$FOD_NOTES"'
+  allow_failure: true
