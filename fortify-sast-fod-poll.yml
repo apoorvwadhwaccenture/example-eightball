@@ -1,0 +1,21 @@
+fortify-sast-fod:
+  image: registry.gitlab.com/fortify/fortify-tools:latest
+  variables:
+    # Override the packaging options for non-Maven projects
+    PACKAGE_OPTS: "-bt mvn"
+    # Override the URLs if using a different Fortify on Demand environment
+    FOD_URL: "https://ams.fortify.com"
+    FOD_API_URL: "https://api.ams.fortify.com/"
+    # Override the FoD Uploader options if desired
+    FOD_UPLOADER_OPTS: "-ep 4"
+    FOD_NOTES: "Triggered by Gitlab Pipeline IID $CI_PIPELINE_IID: $CI_PIPELINE_URL"
+  script:
+    - 'export PATH=$PATH:/opt/bin'
+    # Package source code using ScanCentral client
+    - 'scancentral package $PACKAGE_OPTS -o package.zip'
+    # Start Fortify on Demand SAST scan with polling enabled
+    - 'java -jar $FOD_UPLOAD -z package.zip -aurl $FOD_API_URL -purl $FOD_URL -rid "$FOD_RELEASE" -tc "$FOD_TENANT" -uc "$FOD_USER" "$FOD_PAT" $FOD_UPLOADER_OPTS -n "$FOD_NOTES" -I 1 | tee Fod_SAST_results.txt'
+    # If failing Security Policy after scan completion, terminate the job with a non-zero exit code
+    - 'if [ $(grep -c Failed Fod_SAST_results.txt) -ne 0 ]; then echo "Release is failing Fortify on Demand security policy. Marking fod_sast job as failed." && exit 2; fi'
+# Override to false to fail the entire pipeline if the FoD scan results in a Security Policy failure
+  allow_failure: true
