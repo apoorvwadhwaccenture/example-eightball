@@ -1,4 +1,4 @@
 include: 'fortify-sast-fod.yml'
 
-fod_sast:
+fortify-sast-fod:
   allow_failure: true 
