@@ -1,4 +1,4 @@
-include: 'fortify-sast-fod.yml'
+include: 'fortify-sast-fod-poll.yml'
 
 fortify-sast-fod:
-  allow_failure: true 
+  allow_failure: false
