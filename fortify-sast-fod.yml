@@ -1,5 +1,5 @@
 fortify-sast-fod:
-  image: registry.gitlab.com/fortify/fortify-tools:latest
+  image: dylanbthomas/fortify-ci-tools-test:latest
   variables:
     PACKAGE_OPTS: "-bt mvn"
     FOD_URL: "https://ams.fortify.com"
