@@ -1,5 +1,5 @@
 fortify-sast-fod:
-  image: dylanbthomas/fortify-ci-tools-test:1600275150
+  image: dylanbthomas/fortify-ci-tools-test:1600282744
   variables:
     PACKAGE_OPTS: "-bt mvn"
     FOD_URL: "https://ams.fortify.com"
@@ -7,7 +7,7 @@ fortify-sast-fod:
     FOD_UPLOADER_OPTS: "-ep 4"
     FOD_NOTES: "Triggered by Gitlab Pipeline IID $CI_PIPELINE_IID: $CI_PIPELINE_URL"
   script:
-    - 'export PATH=$PATH:/opt/bin'
+    #- 'export PATH=$PATH:/opt/bin'
     # Package source code using ScanCentral client
     - 'scancentral package $PACKAGE_OPTS -o package.zip'
     # Start Fortify on Demand SAST scan
