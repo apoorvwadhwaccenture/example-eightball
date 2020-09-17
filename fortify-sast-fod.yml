@@ -1,5 +1,5 @@
 fortify-sast-fod:
-  image: dylanbthomas/fortify-ci-tools-test:1600288092
+  image: dylanbthomas/fortify-ci-tools-test:latest
   variables:
     PACKAGE_OPTS: "-bt mvn"
     FOD_URL: "https://ams.fortify.com"
