@@ -1,0 +1,1 @@
+Example integration of Fortify Static Application Security Testing (SAST) into a GitLab CI/CD pipeline by including a reference template from the [Fortify CI Templates](https://gitlab.com/Fortify/gitlab-ci-templates) library. Default values are overridden to show customization possibilities.
