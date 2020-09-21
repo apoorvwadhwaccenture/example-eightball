@@ -1,4 +1,7 @@
-include: 'https://gitlab.com/Fortify/gitlab-ci-templates/-/blob/initial-docs/templates/fortify-sast-fod.yml'
+include: 
+  - project: 'F'ortify/gitlab-ci-templates'
+    file: 'templates/fortify-sast-fod.yml'
+    ref: 'initial-docs'
 
 fortify-sast-fod:
   variables:
