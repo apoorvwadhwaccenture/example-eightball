@@ -1,9 +1,9 @@
 include: 
   - project: 'Fortify/gitlab-ci-templates'
     file: 'templates/fortify-sast-fod.yml'
-    ref: 'initial-docs'
 
 fortify-sast-fod:
   variables:
     FOD_UPLOADER_OPTS: "-ep 2 -pp 0 -I 1 -apf"
+  when: manual
   allow_failure: true
