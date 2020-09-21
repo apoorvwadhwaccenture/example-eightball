@@ -5,5 +5,5 @@ include:
 
 fortify-sast-fod:
   variables:
-    FOD_NOTES: "Testing variable override from included job"
+    FOD_UPLOADER_OPTS: "-ep 2 -pp 0 -I 1 -apf"
   allow_failure: true
