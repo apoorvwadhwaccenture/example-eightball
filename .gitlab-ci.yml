@@ -3,7 +3,7 @@ fortify_sast_scanning:
   variables:
     export_from: fod 
     export_to: json.gitlab
-    json_gitlab_output_file: gl-sast.json 
+    json_gitlab_output_file: ${CI_PROJECT_DIR}/gl-sast.json 
     fod_vulnerability_embed: details,recommendations
   script: 
   - echo Hello
