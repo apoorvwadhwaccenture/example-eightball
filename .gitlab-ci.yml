@@ -1,10 +1,10 @@
 fortify_sast_scanning:
   image: rsenden/fortify-vulnerability-exporter
   variables:
-    export_from=fod 
-    export_to=json.gitlab
-    json_gitlab_output_file=gl-sast.json 
-    fod_vulnerability_embed=details,recommendations
+    export_from: fod 
+    export_to: json.gitlab
+    json_gitlab_output_file: gl-sast.json 
+    fod_vulnerability_embed: details,recommendations
   script: 
   - echo Hello
   when: manual
