@@ -1,17 +1,3 @@
-# Remotely include the official Fortify template for Fortify on Demand Static Application Security Testing (SAST)
-include: 
-  - project: 'Fortify/gitlab-ci-templates'
-    file: 'templates/fortify-sast-fod.yml'
-
-# Example of overriding the default variables in the template
-fortify-sast-fod:
-  variables:
-    # In addition to starting a scan, also wait for the scan to complete and display summarized results ('-I 1') and do not fail the job if the release is failing the Security Policy set in Fortify on Demand ('-apf' combined with allow_failure: true) 
-    FOD_UPLOADER_OPTS: "-ep 2 -pp 0 -I 1 -apf"
-  # Specify the events that should trigger the Fortify on Demand job for this repository. For this demo, we want to manually run. A common configuration for a SAST scan would be to trigger on one or more of merge/schedule/release trigger against master
-  when: manual
-  allow_failure: true
-  
 fortify_sast_scanning:
   image: rsenden/fortify-vulnerability-exporter
   script: java -DpopulateContainerDirs=true -cp /app/resources:/app/classes:/app/libs/* com.fortify.vulnexport.FortifyVulnerabilityExporter --export.from=fod --export.to=json.gitlab --json.gitlab.output.file=gl-sast.json --fod.vulnerability.embed=details,recommendations
