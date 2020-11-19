@@ -11,3 +11,13 @@ fortify-sast-fod:
   # Specify the events that should trigger the Fortify on Demand job for this repository. For this demo, we want to manually run. A common configuration for a SAST scan would be to trigger on one or more of merge/schedule/release trigger against master
   when: manual
   allow_failure: true
+  
+fortify_sast_scanning:
+  image: rsenden/fortify-vulnerability-exporter
+  script: java -DpopulateContainerDirs=true -cp /app/resources:/app/classes:/app/libs/* com.fortify.vulnexport.FortifyVulnerabilityExporter --export.from=fod --export.to=json.gitlab --json.gitlab.output.file=gl-sast.json
+  when: manual
+  allow_failure: true
+  artifacts:
+    reports:
+      sast: gl-sast.json
+  
