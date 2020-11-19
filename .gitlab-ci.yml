@@ -6,7 +6,7 @@ fortify_sast_scanning:
     json_gitlab_output_file: ${CI_PROJECT_DIR}/gl-sast.json 
     fod_vulnerability_embed: details,recommendations
   script: 
-  - echo Hello
+  - echo Script entry is required but not used
   when: manual
   allow_failure: true
   artifacts:
