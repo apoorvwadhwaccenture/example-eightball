@@ -1,8 +1,12 @@
 fortify_sast_scanning:
   image: rsenden/fortify-vulnerability-exporter
+  variables:
+    export_from=fod 
+    export_to=json.gitlab
+    json_gitlab_output_file=gl-sast.json 
+    fod_vulnerability_embed=details,recommendations
   script: 
   - echo Hello
-#  - java -DpopulateContainerDirs=true -cp /app/resources:/app/classes:/app/libs/* com.fortify.vulnexport.FortifyVulnerabilityExporter --export.from=fod --export.to=json.gitlab --json.gitlab.output.file=gl-sast.json --fod.vulnerability.embed=details,recommendations
   when: manual
   allow_failure: true
   artifacts:
