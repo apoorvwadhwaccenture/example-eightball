@@ -8,5 +8,5 @@ fortify_sast_scanning:
   allow_failure: true
   artifacts:
     reports:
-      sast: gl-sast.json
+      sast: gl-fortify-sast.json
   
