@@ -1,21 +1,13 @@
-# You can override the included template(s) by including variable overrides
-# See https://docs.gitlab.com/ee/user/application_security/sast/#customizing-the-sast-settings
-# Note that environment variables can be set in several places
-# See https://docs.gitlab.com/ee/ci/variables/#priority-of-environment-variables
-fortify_sast_scanning:
-  image: rsenden/fortify-vulnerability-exporter
+# Remotely include the official Fortify template for Fortify on Demand Static Application Security Testing (SAST)
+include: 
+  - project: 'Fortify/gitlab-ci-templates'
+    file: 'templates/fortify-sast-fod.yml'
+
+# Example of overriding the default variables in the template
+fortify-sast-fod:
   variables:
-    export_config: "/config/FoDToGitLab.yml"
-  script:
-  - echo Script entry is required but not used
+    # In addition to starting a scan, also wait for the scan to complete and display summarized results ('-I 1') and do not fail the job if the release is failing the Security Policy set in Fortify on Demand ('-apf' combined with allow_failure: true) 
+    FOD_UPLOADER_OPTS: "-ep 2 -pp 0 -I 1 -apf"
+  # Specify the events that should trigger the Fortify on Demand job for this repository. For this demo, we want to manually run. A common configuration for a SAST scan would be to trigger on one or more of merge/schedule/release trigger against master
   when: manual
   allow_failure: true
-  artifacts:
-    reports:
-      sast: gl-fortify-sast.json
-stages:
-- test
-sast:
-  stage: test
-include:
-- template: Security/SAST.gitlab-ci.yml
