@@ -2,6 +2,8 @@
 include: 
   - project: 'Fortify/gitlab-ci-templates'
     file: 'templates/fortify-sast-fod.yml'
+    - name: Fortify on Demand Scan
+  uses: fortify/gha-setup-fod-uploader@v1.0.1
 
 # Example of overriding the default variables in the template
 fortify-sast-fod:
